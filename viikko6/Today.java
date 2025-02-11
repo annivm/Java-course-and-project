@@ -186,7 +186,6 @@ public class Today {
             List <Event> events = new ArrayList<Event>();
 
             // etsitään vastaavat tapahtumat annetulla päivällä ja kategorialla
-
             for (Event event : app.events) {
                 if (isSameDate( dateToFind, event.getDate()) && categoryToFind.equals(event.getCategory()) ) {
                     events.add(event);
