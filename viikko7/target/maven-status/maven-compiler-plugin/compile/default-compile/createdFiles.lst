@@ -1,0 +1,5 @@
+com\example\Today.class
+com\example\Event.class
+com\example\Category.class
+com\example\CSVEventProvider.class
+com\example\EventProvider.class

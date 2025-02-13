@@ -1,13 +1,20 @@
+package com.example;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Month;
 import java.time.MonthDay;
 import java.util.List;
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 import java.util.ArrayList;
 import java.time.LocalDate;
+
+
 
 public class CSVEventProvider implements EventProvider {
     private List<Event> events;
@@ -15,29 +22,46 @@ public class CSVEventProvider implements EventProvider {
     public CSVEventProvider(String fileName) {
         this.events = new ArrayList<>();
 
-        // Read all lines from the CSV file
-        // and create events with a helper method.
-        // This is just a placeholder, and a
-        // very bad way to do this;
-        // there are just too many special cases in CSV.
-        // Always use a library to handle the heavy lifting.
-        // You have been warned! The next version will fix this.
-        Path path = Paths.get(fileName);
         try {
-            List<String> lines = Files.readAllLines(path);
-
-            for (String line : lines) {
-                this.events.add(makeEvent(line));
+            Path path;
+            String ostype = System.getProperty("os.name").toLowerCase();
+            if (ostype.contains("win")) {
+                path = Paths.get((System.getenv("USERPROFILE")), ".today", fileName);
+            } else if (ostype.contains("mac") || ostype.contains("nux")) {
+                path = Paths.get((System.getenv("HOME")), ".today", fileName);
+            } else {
+                System.out.println("Failed to get OS type and homepath");
+                return;
             }
 
-            System.out.printf("Read %d events from CSV file%n", this.events.size());
-        } catch (IOException ioe) {
-            System.err.println("File '" + fileName + "' not found");
-        }
+            // luodaan tiedostonlukija
+            FileReader reader = new FileReader(path.toString());
 
-        // Note that if there was an IOException, the list of events
-        // will be empty. It is important to create the list before
-        // any attempts to read from a file!
+            // luodaan CSVReader ja luetaan tiedosto
+            CSVReader csvReader = new CSVReader(reader);
+
+            // luetaan tiedosto rivi kerrallaan
+            String[] next;
+            while ((next = csvReader.readNext()) != null) {
+                String row = String.join(",", next);
+                this.events.add(makeEvent(row));
+            }
+            //System.out.printf("Read %d events from CSV file%n", this.events.size());
+            csvReader.close();
+
+        } catch (InvalidPathException ipe) {
+            System.err.println("Invalid path. " + ipe.getMessage());
+            System.exit(1);
+        } catch(FileNotFoundException fnfe) {
+            System.err.println("File '" + fileName + "' not found. " + fnfe.getMessage());
+            System.exit(1);
+        } catch (IOException ioe) {
+            System.err.println("Error reading the file " + ioe.getMessage());
+            System.exit(1);
+        } catch(CsvValidationException csve){
+            System.err.println("Error reading CSV file." + csve.getMessage());
+            System.exit(1);
+        }
     }
 
     @Override
