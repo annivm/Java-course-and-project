@@ -2,7 +2,6 @@ package viikko9;
 
 import java.time.MonthDay;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**

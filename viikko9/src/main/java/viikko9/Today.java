@@ -22,6 +22,7 @@ public class Today {
         fileName = "/Users/anniv/.today/singular-events.csv";
         manager.addEventProvider(new CSVEventProvider(fileName));
 
+        /*
         MonthDay today = MonthDay.now();
         List<Event> allEvents = manager.getEventsOfDate(today);
         List<AnnualEvent> annualEvents = new ArrayList<>();
@@ -45,6 +46,8 @@ public class Today {
         }
         //System.out.printf("%d events%n", annualEvents.size());
 
+
+
         System.out.println("\nToday in history:");
         Collections.sort(singularEvents, new SingularEventComparator());
         Collections.reverse(singularEvents);
@@ -63,7 +66,7 @@ public class Today {
                     s.getCategory());
         }
         //System.out.printf("%d events%n", singularEvents.size());
-
+        */
 
         System.out.println("\nFiltered events with DateFilter:");
         MonthDay testDay = MonthDay.parse("--03-03");

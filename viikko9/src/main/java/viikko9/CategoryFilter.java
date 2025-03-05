@@ -1,7 +1,5 @@
 package viikko9;
 
-import java.time.MonthDay;
-
 public class CategoryFilter extends EventFilter {
     private Category category;
 

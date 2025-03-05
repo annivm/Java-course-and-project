@@ -34,3 +34,4 @@ public class DateCategoryFilter extends EventFilter {
         return false;
     }
 }
+
