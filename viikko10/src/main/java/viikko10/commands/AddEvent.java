@@ -49,7 +49,7 @@ public class AddEvent implements Runnable {
                 event = new SingularEvent(date, eventDescription, category);
             // --MM-dd format
             } else if (eventDate.matches("--\\d{2}-\\d{2}")) {
-                MonthDay date = MonthDay.parse(eventDate, DateTimeFormatter.ofPattern("--MM-dd"));
+                MonthDay date = MonthDay.parse(eventDate);
                 event = new AnnualEvent(date, eventDescription, category);
             } else {
                 throw new DateTimeParseException("Invalid date format", eventDate, 0);
