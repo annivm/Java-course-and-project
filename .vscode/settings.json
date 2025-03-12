@@ -1,3 +1,11 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.project.sourcePaths": [
+        "viikko7",
+        "viikko6",
+        "viikko5",
+        "viikko4",
+        "viikko3",
+        "viikko9/eventfilters/src/main/java/viikko9"
+    ]
 }
