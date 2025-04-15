@@ -1,13 +1,7 @@
 package com.example;
 
-import com.example.Event;
-
-import java.time.LocalDate;
-import java.time.Month;
 import java.time.MonthDay;
 import java.util.List;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 public class Today {
