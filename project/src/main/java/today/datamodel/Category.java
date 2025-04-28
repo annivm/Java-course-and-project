@@ -1,6 +1,5 @@
 package today.datamodel;
 
-import java.util.Comparator;
 import java.util.Objects;
 
 /**

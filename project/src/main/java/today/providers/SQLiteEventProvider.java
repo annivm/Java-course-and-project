@@ -6,10 +6,8 @@ import today.datamodel.Category;
 import today.datamodel.Event;
 import today.datamodel.SingularEvent;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.time.MonthDay;
@@ -278,5 +276,4 @@ public class SQLiteEventProvider implements EventProvider {
             System.err.println(e.getMessage());
         }
     }
-
 }

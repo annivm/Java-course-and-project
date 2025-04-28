@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * Represents an event that occurs once a year on a given day.
  */
-public class AnnualEvent extends Event implements Comparable<Event> {
+public class AnnualEvent extends Event {
     /**
      * Constructs an annual event from a month-day, description, and category.
      *

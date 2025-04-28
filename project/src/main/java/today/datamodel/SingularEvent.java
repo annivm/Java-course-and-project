@@ -8,7 +8,7 @@ import java.util.Objects;
 /**
  * Represents an event that has occurred once in history.
  */
-public class SingularEvent extends Event implements Comparable<Event> {
+public class SingularEvent extends Event {
     private int year;
 
     /**
