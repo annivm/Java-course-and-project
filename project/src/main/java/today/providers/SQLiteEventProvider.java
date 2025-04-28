@@ -74,6 +74,23 @@ public class SQLiteEventProvider implements EventProvider {
             statement.execute(query);
             statement.close();
 
+
+            // Lisää oletuskategoriat, jos taulu on tyhjä
+            query = "SELECT COUNT(*) FROM category";
+            statement = connection.createStatement();
+            var resultSet = statement.executeQuery(query);
+            if (resultSet.next() && resultSet.getInt(1) == 0) {
+                // Taulu on tyhjä, lisätään oletuskategoriat
+                query = """
+                    INSERT INTO category (category_id, primary_name, secondary_name) VALUES
+                    (1, 'test', 'fake'),
+                    (2, 'apple', 'macos'),
+                    (3, 'oracle', 'java'),
+                    (4, 'programming', 'rust')""";
+                statement.execute(query);
+            }
+            statement.close();
+
             connection.close();
         }
     }
@@ -167,9 +184,12 @@ public class SQLiteEventProvider implements EventProvider {
     private Integer getCategoryId(Category category) {
         for (Map.Entry<Integer, String> entry : this.categories.entrySet()) {
             String[] parts = entry.getValue().split("/");
-            if (parts.length == 2 &&
-                parts[0].equalsIgnoreCase(category.primary()) &&
-                parts[1].equalsIgnoreCase(category.secondary())) {
+            String primary = parts[0];
+            String secondary = parts.length > 1 ? parts[1] : "";
+            if (primary.equalsIgnoreCase(category.primary()) &&
+                (category.secondary().isBlank() || secondary.equalsIgnoreCase(category.secondary()))
+                ) {
+                // System.out.println("Found category ID: " + entry.getKey());
                 return entry.getKey();
             }
         }
@@ -276,4 +296,5 @@ public class SQLiteEventProvider implements EventProvider {
             System.err.println(e.getMessage());
         }
     }
+
 }
