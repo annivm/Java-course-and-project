@@ -76,6 +76,7 @@ public class CSVEventProvider implements EventProvider {
             } else {
                 throw new UnsupportedOperationException("Unsupported event type: " + event.getClass().getName());
             }
+            System.out.printf("Event '%s' on '%s' added successfully%n", event.getDescription(), event.getMonthDay());
             writer.writeNext(record);
         } catch (IOException ioe) {
             System.err.println("Error writing to CSV file: " + ioe.getLocalizedMessage());

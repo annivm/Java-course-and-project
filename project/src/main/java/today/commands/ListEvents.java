@@ -24,12 +24,12 @@ import today.filters.DateFilter;
 import today.filters.EventFilter;
 import today.providers.web.WebEventProvider;
 
-@Command(name = "listevents")
+@Command(name = "listevents", description = "Shows a list of events")
 public class ListEvents implements Runnable {
-    @Option(names = "-c", description = "Category or categories of events to list, separated by commas")
+    @Option(names = {"-c", "--category"}, description = "Category or categories of events to list, separated by commas")
     String categoryOptionString;
 
-    @Option(names = "-d", description = "Date of events to list in the format MM-dd (default is today)")
+    @Option(names = {"-d", "--date"}, description = "Date of events to list in the format MM-dd (default is today)")
     String dateOptionString;
 
     @Override
@@ -43,7 +43,7 @@ public class ListEvents implements Runnable {
                 try {
                     categories.add(Category.parse(catStr.trim()));
                 } catch (IllegalArgumentException iae) {
-                    System.err.println("Invalid category string: '" + catStr + "'");
+                    System.err.println("Invalid category string: '" + catStr + "'. Please use format MM-dd");
                     return;
                 }
             }
@@ -58,10 +58,11 @@ public class ListEvents implements Runnable {
                 System.err.println("Invalid date string: '" + this.dateOptionString + "'");
                 return;
             }
-            System.out.printf("Events for %s:%n%n", monthDay);
+
         } else {
             monthDay = MonthDay.now();
         }
+        System.out.printf("\nEvents for %s:%n%n", monthDay);
 
         EventManager manager = EventManager.getInstance();
 
@@ -128,7 +129,7 @@ public class ListEvents implements Runnable {
                         categoryString);
             }
         } else {
-            System.out.println("No singular events found");
+            System.out.println("\nNo singular events found");
         }
     }
 }

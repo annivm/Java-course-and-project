@@ -31,8 +31,8 @@ public class Today {
         String configDirectory = ".today";
 
         // vaihdettu testauksien ajaksi test.csv
-        Path csvPath = Paths.get(homeDirectory, configDirectory, "test.csv");
-        System.out.println("CSV-file path = " + csvPath.toString());
+        Path csvPath = Paths.get(homeDirectory, configDirectory, "events.csv");
+        //System.out.println("CSV-file path = " + csvPath.toString());
 
         // Create the events file if it doesn't exist
         if (!Files.exists(csvPath)) {
@@ -68,7 +68,7 @@ public class Today {
             // WebEventProvider provider = (WebEventProvider) manager.getEventProviderByID("web");
             // provider.setMonthDay(MonthDay.parse("--03-24"));
 
-            System.out.println("Api-path: " + serverUriString);
+            // System.out.println("Api-path: " + serverUriString);
         } catch (URISyntaxException use) {
             System.err.println("Error making URI: " + use.getLocalizedMessage());
         } catch (DateTimeParseException dtpe) {

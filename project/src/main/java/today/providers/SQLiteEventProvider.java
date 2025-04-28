@@ -32,7 +32,7 @@ public class SQLiteEventProvider implements EventProvider {
     public SQLiteEventProvider(Path databasePath) {
         this.url = "jdbc:sqlite:" + databasePath;
         // TODO: normalize path separators to '/'
-        System.out.println("Database URL string = " + this.url);
+        // System.out.println("Database URL string = " + this.url);
 
         if (!Files.exists(databasePath)) {
             // Create the database file if it doesn't exist.
@@ -273,6 +273,7 @@ public class SQLiteEventProvider implements EventProvider {
         try (var connection = DriverManager.getConnection(url);
              var statement = connection.createStatement()) {
             statement.executeUpdate(query);
+            System.out.printf("Event '%s' on '%s' added successfully%n", event.getDescription(), event.getMonthDay());
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }

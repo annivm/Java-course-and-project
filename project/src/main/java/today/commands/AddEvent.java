@@ -2,7 +2,6 @@ package today.commands;
 
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
-import picocli.CommandLine.Parameters;
 import today.EventManager;
 import today.datamodel.AnnualEvent;
 import today.datamodel.Category;
@@ -11,11 +10,9 @@ import today.datamodel.SingularEvent;
 import today.providers.CSVEventProvider;
 import today.providers.EventProvider;
 import today.providers.SQLiteEventProvider;
-import today.providers.web.WebEventProvider;
 
 import java.time.LocalDate;
 import java.time.MonthDay;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 @Command(name = "addevent", description = "Adds a new event")
@@ -31,7 +28,7 @@ public class AddEvent implements Runnable {
     private String eventCategory;
 
     @Option(names = {"-p", "--provider"}, description = "The identifier of the event provider")
-    private String eventProviderId = "csv";
+    private String eventProviderId = "csv"; // Default if not given
 
     @Override
     public void run() {
@@ -71,8 +68,6 @@ public class AddEvent implements Runnable {
                 System.err.printf("Event provider with given identifier '%s' not found%n", eventProviderId);
                 return;
             }
-
-            System.out.printf("Event '%s' on '%s' added successfully%n", eventDescription, eventDate);
         } catch (DateTimeParseException dtpe) {
             System.err.println("Error in date format: " + dtpe.getLocalizedMessage());
         } catch (IllegalArgumentException iae) {
