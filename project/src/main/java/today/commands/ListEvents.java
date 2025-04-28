@@ -103,11 +103,10 @@ public class ListEvents implements Runnable {
 
             for (AnnualEvent a : annualEvents) {
                 final Category cat = a.getCategory();
-                String categoryString = cat.primary() + "/" + cat.secondary();
                 System.out.printf(
                         "- %s (%s)%n",
                         a.getDescription(),
-                        categoryString);
+                        cat.toString());
             }
         } else {
             System.out.println("No annual events found");
@@ -121,12 +120,11 @@ public class ListEvents implements Runnable {
             for (SingularEvent s : singularEvents) {
                 int year = s.getDate().getYear();
                 final Category cat = s.getCategory();
-                String categoryString = cat.primary() + "/" + cat.secondary();
                 System.out.printf(
                         "%d: %s (%s)%n",
                         year,
                         s.getDescription(),
-                        categoryString);
+                        cat.toString());
             }
         } else {
             System.out.println("\nNo singular events found");
