@@ -117,14 +117,6 @@ public class WebEventProvider implements EventProvider {
             String bodyString = null;
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             bodyString = response.body();
-            // int status = response.statusCode();
-            // if (status != 200) {
-            //     System.err.printf("HTTP response: %d%n", status);
-            //     System.err.println("Response body = " + bodyString);
-            // } else {
-            //     System.out.println("Response headers: " + response.headers());
-            //     System.out.println("Response body = " + bodyString);
-            // }
 
             // Create a custom deserializer for Event objects
             // and register it with Jackson's object mapper.

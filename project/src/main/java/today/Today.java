@@ -30,7 +30,6 @@ public class Today {
         String homeDirectory = System.getProperty("user.home");
         String configDirectory = ".today";
 
-        // vaihdettu testauksien ajaksi test.csv
         Path csvPath = Paths.get(homeDirectory, configDirectory, "events.csv");
         //System.out.println("CSV-file path = " + csvPath.toString());
 
@@ -64,9 +63,6 @@ public class Today {
 
             WebEventProvider webProvider = new WebEventProvider(serverUri, "web");
             manager.addEventProvider(webProvider);
-
-            // WebEventProvider provider = (WebEventProvider) manager.getEventProviderByID("web");
-            // provider.setMonthDay(MonthDay.parse("--03-24"));
 
             // System.out.println("Api-path: " + serverUriString);
         } catch (URISyntaxException use) {
