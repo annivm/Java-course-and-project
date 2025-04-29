@@ -182,13 +182,7 @@ public class SQLiteEventProvider implements EventProvider {
     // stored in the database are unique.
     private Integer getCategoryId(Category category) {
         for (Map.Entry<Integer, String> entry : this.categories.entrySet()) {
-            String[] parts = entry.getValue().split("/");
-            String primary = parts[0];
-            String secondary = parts.length > 1 ? parts[1] : "";
-            if (primary.equalsIgnoreCase(category.primary()) &&
-                (category.secondary().isBlank() || secondary.equalsIgnoreCase(category.secondary()))
-                ) {
-                // System.out.println("Found category ID: " + entry.getKey());
+            if (entry.getValue().equals(category.toString())) {
                 return entry.getKey();
             }
         }
