@@ -75,12 +75,11 @@ public class SQLiteEventProvider implements EventProvider {
             statement.close();
 
 
-            // Lisää oletuskategoriat, jos taulu on tyhjä
+            // Add default categories if the table is empty
             query = "SELECT COUNT(*) FROM category";
             statement = connection.createStatement();
             var resultSet = statement.executeQuery(query);
             if (resultSet.next() && resultSet.getInt(1) == 0) {
-                // Taulu on tyhjä, lisätään oletuskategoriat
                 query = """
                     INSERT INTO category (category_id, primary_name, secondary_name) VALUES
                     (1, 'test', 'fake'),
@@ -269,10 +268,12 @@ public class SQLiteEventProvider implements EventProvider {
         // System.out.println(event.getCategory());
         // System.out.println(categoryId);
 
-        // If the category is not found, throw an exception.
+        // If the category is not found, throw an exception and list existing categories.
         // Todo-> create new category if not found
         if (categoryId == null) {
-            throw new IllegalArgumentException("Category not found");
+            throw new IllegalArgumentException("Category not found. Please use existing categories: "
+                    + this.categories.values().stream()
+                    .collect(Collectors.joining(", ")));
         }
 
         var query = "";

@@ -69,9 +69,11 @@ public class AddEvent implements Runnable {
                 return;
             }
         } catch (DateTimeParseException dtpe) {
-            System.err.println("Error in date format: " + dtpe.getLocalizedMessage());
+            System.err.println("Error in date format: " + dtpe.getLocalizedMessage() +
+                    ". Please use format yyyy-MM-dd or --MM-dd");
         } catch (IllegalArgumentException iae) {
             System.err.println("Invalid category: " + iae.getLocalizedMessage());
+
         }
     }
 }
