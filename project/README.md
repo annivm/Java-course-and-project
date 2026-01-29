@@ -106,46 +106,71 @@ today
 ```
 
 📌 Commands
-List providers
+
 ```
-today listproviders
+listproviders -> Shows a list of event providers
+listevents -> Shows a list of events
+addevent -> Adds a new event
 ```
 
-List events
+Parameters:
+
 ```
-today listevents [-c=<categories>] [-d=<MM-dd>]
+today listevents [-c=<categoryOptionString>] [-d=<dateOptionString>]
 ```
 
-Options:
+Shows a list of events
+
 ```
--c, --category
+ -c, --category=<categoryOptionString>
+        Category or categories of events to list, separated by commas
+ -d, --date=<dateOptionString>
+        Date of events to list in the format MM-dd (default is today)
 ```
 
-One or more categories separated by commas
-Example: apple/macos,programming/java
--d, --date
-Date in format MM-dd (default: today)
 
-Add event
+``` 
+today addevent -c=<eventCategory> -d=<eventDate>
+ -desc=<eventDescription> [-p=<eventProviderId>]
 ```
-today addevent -c=<category> -d=<yyyy-MM-dd> -desc=<description> [-p=<provider>]
+
+Adds a new event
+
 ```
+ -c, --category=<eventCategory>
+        The category of the event
+ -d, --date=<eventDate>
+        The date of the event (yyyy-MM-dd)
+-desc, --description=<eventDescription>
+        The description of the event
+ -p, --provider=<eventProviderId>
+        The identifier of the event provider
+```
+
+
 
 ⚠️ Known Issues & Solutions
+
+
 Web search without secondary category
+
 Caused by Category.equals() comparing both primary and secondary
 
-Fixed to allow primary-only matching
+-> Fixed to allow primary-only matching
 
-Case-insensitive comparison added
+-> Case-insensitive comparison added
+
 
 SQLite provider category handling
+
 Issue caused by mixing class and record versions
 
-Resolved by aligning implementations
+-> Resolved by aligning implementations
+
 
 Adding events to specific providers
-Implemented using EventManager to resolve providers dynamically
+
+-> Implemented using EventManager to resolve providers dynamically
 
 🚧 Limitations & Future Improvements
 SQLite does not support descriptions with quotes (`' " ``)
@@ -165,6 +190,7 @@ Filtering works only by primary category
 Secondary-category-only filtering is not supported
 
 📝 Notes
+
 Default event provider when adding events is CSV.
 
 ---
