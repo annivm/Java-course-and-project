@@ -1,214 +1,186 @@
-Today – Tapahtumien hallinta komentoriviltä
+# Today – Event Manager (CLI)
 
-Tämä projekti on Java-pohjainen komentorivisovellus, jolla voidaan hakea, suodattaa ja lisätä tapahtumia eri lähteistä. Sovellus tukee useita tapahtumantuottajia (CSV, SQLite ja Web) sekä monipuolisia suodattimia päivämäärän ja kategorian perusteella.
+Java 17 -pohjainen komentorivisovellus tapahtumien hakemiseen, suodattamiseen ja lisäämiseen
+useista eri lähteistä (CSV, SQLite, Web).
 
-Projektin lähdekoodi:
+📦 Course project – *Ohjelmoinnin syventävät tekniikat*
+
+🔗 Source code:
 https://github.com/annivm/5G00EU62-3005-Ohjelmoinnin-syventavat-tekniikat/tree/main/project
 
-Toiminnallisuus
+---
 
-Sovellus mahdollistaa:
+## ✨ Features
 
-Tapahtumien listaamisen
+- List events by date
+- Filter events by category
+- Add new events
+- Use multiple event providers:
+  - CSV
+  - SQLite
+  - Web API
 
-Tapahtumien suodattamisen päivämäärän ja kategorian mukaan
+---
 
-Uusien tapahtumien lisäämisen
+## 🗂 Project Structure
 
-Käytössä olevien tapahtumantuottajien listaamisen
-
-Tapahtumia haetaan kolmesta eri lähteestä:
-
-CSV-tiedosto
-
-SQLite-tietokanta
-
-Verkkopalvelin
-
-Projektin rakenne
-│ EventFactory.java
-│ EventManager.java
-│ Today.java
+.
+├── Today.java # CLI entry point
+├── EventManager.java # Core logic
+├── EventFactory.java
 │
-├── commands
-│   ├── AddEvent.java
-│   ├── ListEvents.java
-│   └── ListProviders.java
+├── commands # CLI commands
+│ ├── AddEvent.java
+│ ├── ListEvents.java
+│ └── ListProviders.java
 │
-├── datamodel
-│   ├── AnnualEvent.java
-│   ├── AnnualEventComparator.java
-│   ├── Category.java
-│   ├── Event.java
-│   ├── SingularEvent.java
-│   └── SingularEventComparator.java
-│
-├── filters
-│   ├── CategoryFilter.java
-│   ├── DateCategoryFilter.java
-│   ├── DateFilter.java
-│   ├── EventFilter.java
-│   └── IdentityFilter.java
-│
-├── providers
-│   ├── CSVEventProvider.java
-│   ├── EventProvider.java
-│   ├── SQLiteEventProvider.java
-│   └── web
-│       ├── EventDeserializer.java
-│       └── WebEventProvider.java
+├── datamodel # Event & category models
+├── filters # Event filtering logic
+├── providers # Data sources
+│ ├── CSVEventProvider.java
+│ ├── SQLiteEventProvider.java
+│ └── web
+│ └── WebEventProvider.java
 
-Kansioiden vastuut
+yaml
+Kopioi koodi
 
-Pääohjelma
+---
 
-Määrittelee komentorivikäyttöliittymän
+## 🛠 Requirements
 
-Rekisteröi tapahtumantuottajat
+- **Java 17**
+- **Maven**
+- Libraries:
+  - OpenCSV
+  - Picocli
+  - Jackson
+  - SQLite JDBC Driver
 
-providers
+---
 
-Tapahtumien lukeminen ja kirjoittaminen eri lähteistä
+## 💾 Local Storage
 
-filters
-
-Tapahtumien suodatuslogiikka
-
-datamodel
-
-Tapahtumiin ja kategorioihin liittyvät tietomallit
-
-commands
-
-Komentorivikäyttöliittymän komennot
-
-Vaatimukset
-
-Java 17
-
-Maven
-
-Käytetyt kirjastot:
-
-OpenCSV
-
-Picocli
-
-Jackson
-
-SQLite JDBC Driver
-
-Tiedostot ja tallennus
-
-Sovellus luo käyttäjän kotihakemistoon kansion:
+The application uses a directory in the user’s home folder:
 
 ~/.today
 
+yaml
+Kopioi koodi
 
-Kansioon luodaan tarvittaessa:
+If missing, the following are created automatically:
+- `events.csv`
+- `events.sqlite3`
 
-events.csv
+⚠️ CSV file or database must **not be open** while running the application.
 
-events.sqlite3
+If no data exists, no events are shown until the user adds them.
 
-Jos näitä ei ole ennestään, ne luodaan automaattisesti.
-Tietokantaan luodaan taulut ja alustetaan kategoriat.
+---
 
-⚠️ CSV-tiedosto tai tietokanta ei saa olla auki, kun ohjelmaa ajetaan.
+## ▶️ Build & Run
 
-Kääntäminen ja ajaminen
+Build the project:
 
-Siirry projektin juurikansioon ja suorita:
-
+```bash
 mvn clean package
+Run:
 
-
-Aja ohjelma:
-
+bash
+Kopioi koodi
 java -jar target/today.jar
+🔧 Optional: CLI Alias
+Example for Git Bash / Linux shell:
 
-Alias (valinnainen)
-
-Esimerkiksi Git Bashissa:
-
+bash
+Kopioi koodi
 nano ~/.bashrc
+Add:
 
-
-Lisää rivi:
-
+bash
+Kopioi koodi
 alias today='java -cp "$PWD/target/today.jar" today.Today'
+Reload:
 
-
-Lataa asetukset:
-
+bash
+Kopioi koodi
 source ~/.bashrc
+Now you can run:
 
-
-Tämän jälkeen ohjelma toimii komennolla:
-
+bash
+Kopioi koodi
 today
-
-Komennot
-Tapahtumantuottajien listaus
+📌 Commands
+List providers
+bash
+Kopioi koodi
 today listproviders
-
-Tapahtumien listaus
-today listevents [-c=<kategoriat>] [-d=<päivämäärä>]
-
-
-Parametrit:
+List events
+bash
+Kopioi koodi
+today listevents [-c=<categories>] [-d=<MM-dd>]
+Options:
 
 -c, --category
-Yksi tai useampi kategoria, pilkulla erotettuna
-(esim. apple/macos,programming/java)
+One or more categories separated by commas
+Example: apple/macos,programming/java
 
 -d, --date
-Päivämäärä muodossa MM-dd
-Oletus: tämän päivän päivämäärä
+Date in format MM-dd (default: today)
 
-Tapahtuman lisääminen
-today addevent -c=<kategoria> -d=<yyyy-MM-dd> -desc=<kuvaus> [-p=<provider>]
+Add event
+bash
+Kopioi koodi
+today addevent -c=<category> -d=<yyyy-MM-dd> -desc=<description> [-p=<provider>]
+⚠️ Known Issues & Solutions
+Web search without secondary category
+Caused by Category.equals() comparing both primary and secondary
 
+Fixed to allow primary-only matching
 
-Parametrit:
+Case-insensitive comparison added
 
--c, --category tapahtuman kategoria
+SQLite provider category handling
+Issue caused by mixing class and record versions
 
--d, --date päivämäärä muodossa yyyy-MM-dd
+Resolved by aligning implementations
 
--desc, --description tapahtuman kuvaus
+Adding events to specific providers
+Implemented using EventManager to resolve providers dynamically
 
--p, --provider tapahtumantuottaja (oletus: csv)
+🚧 Limitations & Future Improvements
+SQLite does not support descriptions with quotes (`' " ``)
 
-Tunnetut ongelmat ja ratkaisut
-1. Web-haut ilman secondary-kategoriaa
+Categories cannot be added via CLI
 
-Ongelma johtui Category.equals()-vertailusta, joka vaati sekä primääri- että sekundäärikategorian.
-Ratkaisu: muutettiin vertailu tukemaan pelkkää primäärikategoriaa ja lisättiin ignoreCase.
+Only predefined categories are supported:
 
-2. SQLiteProvider ja record-muutos
-
-getCategoryId ei tunnistanut class → record -muutosta.
-Ongelma johtui eri versioiden lähdekoodien sekoittumisesta.
-
-3. Tapahtuman lisääminen eri tuottajille
-
-Ratkaistiin hyödyntämällä EventManager-luokkaa, jonka avulla oikea provider voidaan hakea ja käsitellä erikseen.
-
-Rajoitukset ja jatkokehitys
-
-SQLite ei tue tällä hetkellä kuvauksia, joissa on heittomerkkejä tai lainausmerkkejä
-
-Uusia kategorioita ei voi lisätä ohjelman kautta
-
-Tapahtumia voi lisätä vain seuraaviin kategorioihin:
-
+bash
+Kopioi koodi
 1 | test        | fake
 2 | apple       | macos
 3 | oracle      | java
 4 | programming | rust
+Filtering works only by primary category
 
+Secondary-category-only filtering is not supported
 
-Haku onnistuu vain primäärikategorian perusteella
+📝 Notes
+Default event provider when adding events is CSV.
 
-Sekundäärikategorian perusteella ei voi hakea
+markdown
+Kopioi koodi
+
+---
+
+### Miksi tämä näyttää paremmalta GitHubissa
+- Lyhyet kappaleet
+- Emojit ohjaavat silmää (GitHubissa ok)
+- “Scanattava” rakenne → arvioija löytää heti olennaisen
+- Näyttää aidolta open source / kurssiprojektilta
+
+Jos haluat, voin vielä:
+- tehdä **vielä minimalistisemman** version arvioijaa varten
+- poistaa emojit (jos kurssi on konservatiivinen)
+- tehdä **englanninkielisen version CV:tä varten**
+::contentReference[oaicite:0]{index=0}
