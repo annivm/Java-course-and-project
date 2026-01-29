@@ -105,7 +105,7 @@ Now you can run:
 today
 ```
 
-📌 Commands
+📌 Subcommands:
 
 ```
 listproviders -> Shows a list of event providers
@@ -113,13 +113,13 @@ listevents -> Shows a list of events
 addevent -> Adds a new event
 ```
 
-Parameters:
+Parameters and usage:
+
+Shows a list of events:
 
 ```
 today listevents [-c=<categoryOptionString>] [-d=<dateOptionString>]
 ```
-
-Shows a list of events
 
 ```
  -c, --category=<categoryOptionString>
@@ -129,12 +129,13 @@ Shows a list of events
 ```
 
 
+
+Adds a new event:
+
 ``` 
 today addevent -c=<eventCategory> -d=<eventDate>
  -desc=<eventDescription> [-p=<eventProviderId>]
 ```
-
-Adds a new event
 
 ```
  -c, --category=<eventCategory>
